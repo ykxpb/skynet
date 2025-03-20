@@ -1,4 +1,5 @@
 local bson = require "bson"
+local md5 = require "md5"
 
 local sub = bson.encode_order( "hello", 1, "world", 2 )
 
@@ -57,6 +58,8 @@ local metaarray = setmetatable({ n = 5 }, {
 	__index = function(self, idx) return tostring(idx) end,
 })
 
+local md5_hello = md5.hmacmd5("hello")
+
 b = bson.encode {
 	a = 1,
 	b = true,
@@ -76,6 +79,7 @@ b = bson.encode {
 	p = 2^32-1,
 	q = obj_b,
 	r = metaarray,
+    s = bson.binary(md5_hello, 5),
 }
 
 print "\n[before replace]"

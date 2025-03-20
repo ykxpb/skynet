@@ -1081,12 +1081,14 @@ lregex(lua_State *L) {
 
 static int
 lbinary(lua_State *L) {
+    int subtype = luaL_optinteger(L, 2, 0);
+
 	lua_settop(L,1);
 	luaL_Buffer b;
 	luaL_buffinit(L, &b);
 	luaL_addchar(&b, 0);
 	luaL_addchar(&b, BSON_BINARY);
-	luaL_addchar(&b, 0);	// sub type
+	luaL_addchar(&b, subtype);	// sub type
 	lua_pushvalue(L,1);
 	luaL_addvalue(&b);
 	luaL_pushresult(&b);
